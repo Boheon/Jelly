@@ -1,4 +1,6 @@
 package org.galapagos.jelly;
 
-public class TravelApp extends Application{
+import org.galapogos.common.cli.ui.Application;
+
+public class TravelApp extends Application {
 }

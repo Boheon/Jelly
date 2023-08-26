@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Base/Base.iml" filepath="$PROJECT_DIR$/../Base/Base.iml" />
       <module fileurl="file://$PROJECT_DIR$/jelly.iml" filepath="$PROJECT_DIR$/jelly.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jdbc_ex/src/main/main.iml" filepath="$PROJECT_DIR$/../jdbc_ex/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jdbc_ex/src/test/test.iml" filepath="$PROJECT_DIR$/../jdbc_ex/src/test/test.iml" />
     </modules>
   </component>
 </project>

@@ -10,5 +10,8 @@
         <module name="jelly" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="jdbc_ex" target="20" />
+    </bytecodeTargetLevel>
   </component>
 </project>
