@@ -29,6 +29,8 @@ public class TravelDaoImpl implements TravelDao {
         String sql = "SELECT COUNT(*) TOTAL_COUNT FROM TRAVEL";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             try (ResultSet rs = stmt.executeQuery()) {
+                rs.next();
+                return rs.getInt("TOTAL_COUNT");
             }
         } catch (SQLException e) {
             e.printStackTrace();

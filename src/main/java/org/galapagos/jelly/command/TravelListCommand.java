@@ -1,6 +1,6 @@
 package org.galapagos.jelly.command;
 
-import org.galapagos.jelly.TravelApp;
+
 import org.galapagos.jelly.dao.TravelDao;
 import org.galapagos.jelly.dao.TravelDaoImpl;
 import org.galapagos.jelly.vo.TravelVO;
