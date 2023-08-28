@@ -1,17 +1,18 @@
 package org.galapagos.jelly.command;
 
 import org.galapagos.jelly.dao.TravelDao;
-import org.galapagos.jelly.dao.TravelDaoImpl;
+import org.galapagos.jelly.dao.TravelDaoOracleImpl;
 import org.galapagos.jelly.vo.Region;
 import org.galapagos.jelly.vo.TravelVO;
-import org.galapogos.common.cli.Input;
 import org.galapogos.common.cli.common.Command;
+
 
 import java.util.List;
 
 public class TravelRegionCommand implements Command {
 
-    TravelDao dao = TravelDaoImpl.getInstance();
+    //TravelDao dao = TravelDaoOracleImpl.getInstance();
+    TravelDao dao = TravelDaoMySQLImpl.getInstance();
     @Override
     public void execute() {
         // 권역 리스트를 출력

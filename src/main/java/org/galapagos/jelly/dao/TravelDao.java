@@ -1,5 +1,6 @@
 package org.galapagos.jelly.dao;
 
+import org.galapagos.jelly.vo.PageRequest;
 import org.galapagos.jelly.vo.Region;
 import org.galapagos.jelly.vo.TravelVO;
 
@@ -10,7 +11,7 @@ public interface TravelDao {
     int getTotalCount();
 
     //페이지 목록
-    List<TravelVO> getPage(int start, int end);
+    List<TravelVO> getPage(PageRequest pageRequest);
 
     //지역 목록얻기
     List<Region> getRegions();

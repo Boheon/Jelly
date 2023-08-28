@@ -1,6 +1,7 @@
 package org.galapagos.jelly.dao;
 
 import org.galapagos.jelly.common.JDBCUtil;
+import org.galapagos.jelly.vo.PageRequest;
 import org.galapagos.jelly.vo.Region;
 import org.galapagos.jelly.vo.TravelVO;
 
@@ -11,14 +12,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TravelDaoImpl implements TravelDao {
+public class TravelDaoOracleImpl implements TravelDao {
 
     Connection conn = JDBCUtil.getConnection();
 
-    private TravelDaoImpl() {
+    private TravelDaoOracleImpl() {
     }
 
-    private static TravelDaoImpl dao = new TravelDaoImpl();
+    private static TravelDaoOracleImpl dao = new TravelDaoOracleImpl();
 
     public static TravelDao getInstance() {
         return dao;
@@ -39,33 +40,41 @@ public class TravelDaoImpl implements TravelDao {
     }
 
     @Override
-    public List<TravelVO> getPage(int start, int end) {
+    public List<TravelVO> getPage(PageRequest pageRequest) {
         String sql = "SELECT * FROM TRAVEL_VIEW WHERE SEQ BETWEEN ? AND ?";
         List<TravelVO> list = new ArrayList<>();
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             //부분 설정
-            stmt.setInt(1, start);
-            stmt.setInt(2, end);
+            stmt.setInt(1, pageRequest.getStart());
+            stmt.setInt(2, pageRequest.getEnd());
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    TravelVO travel = TravelVO.builder()
-                            .no(rs.getInt("no"))
-                            .region(rs.getString("region"))
-                            .title(rs.getString("title"))
-                            .description(rs.getString("description"))
-                            .address(rs.getString("address"))
-                            .phone(rs.getString("phone"))
-                            .build();
-                    list.add(travel);
-                }
-            }
+           mapList(list, stmt);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return list;
+    }
+
+    private void mapList(List<TravelVO> list, PreparedStatement stmt) throws SQLException {
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                TravelVO travel = map(rs);
+                list.add(travel);
+            }
+        }
+    }
+
+    private TravelVO map(ResultSet rs) throws SQLException {
+        TravelVO travel = TravelVO.builder()
+                .no(rs.getInt("no"))
+                .region(rs.getString("region"))
+                .title(rs.getString("title"))
+                .description(rs.getString("description"))
+                .address(rs.getString("address"))
+                .phone(rs.getString("phone"))
+                .build();
+        return travel;
     }
 
     @Override
@@ -111,6 +120,7 @@ public class TravelDaoImpl implements TravelDao {
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             //부분 설정
             stmt.setString(1, keyword);
+            stmt.setString(2, keyword);
             mapList(list, stmt);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,35 +132,17 @@ public class TravelDaoImpl implements TravelDao {
     public TravelVO findById(int no) {
         String sql = "SELECT * FROM TRAVEL WHERE NO = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-           stmt.setInt(1, no);
-           try(ResultSet rs = stmt.executeQuery()){
-               if(rs.next()) return map(rs);
-           }
+            stmt.setInt(1, no);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return map(rs);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    private TravelVO map(ResultSet rs) throws SQLException {
-        TravelVO travel = TravelVO.builder()
-                .no(rs.getInt("no"))
-                .region(rs.getString("region"))
-                .title(rs.getString("title"))
-                .description(rs.getString("description"))
-                .address(rs.getString("address"))
-                .phone(rs.getString("phone"))
-                .build();
 
-        return travel;
-    }
 
-    private void mapList(List<TravelVO> list, PreparedStatement stmt) throws SQLException {
-        try (ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                TravelVO travel = map(rs);
-                list.add(travel);
-            }
-        }
-    }
+
 }

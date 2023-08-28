@@ -2,7 +2,7 @@ package org.galapagos.jelly.command;
 
 
 import org.galapagos.jelly.dao.TravelDao;
-import org.galapagos.jelly.dao.TravelDaoImpl;
+import org.galapagos.jelly.dao.TravelDaoOracleImpl;
 import org.galapagos.jelly.vo.TravelVO;
 import org.galapogos.common.cli.Input;
 import org.galapogos.common.cli.common.Command;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TravelListCommand implements Command {
     final static int COUNT_PER_PAGE= 10;
-    TravelDao dao = TravelDaoImpl.getInstance();
+    TravelDao dao = TravelDaoOracleImpl.getInstance();
 
     @Override
     public void execute(){
@@ -28,8 +28,13 @@ public class TravelListCommand implements Command {
 
             // page1: 1~10
             // page2: 11~20
-            int start = (page - 1) * COUNT_PER_PAGE + 1;
-            int end = start + COUNT_PER_PAGE - 1;
+            //oracle
+            //int start = (page - 1) * COUNT_PER_PAGE + 1;
+            //int end = start + COUNT_PER_PAGE - 1;
+
+            //mysql
+            int start = (page-1) * COUNT_PER_PAGE;
+            int end = start + COUNT_PER_PAGE;
 
             List<TravelVO> list = dao.getPage(start, end);
             System.out.println("#    [권역명] 관광지명");

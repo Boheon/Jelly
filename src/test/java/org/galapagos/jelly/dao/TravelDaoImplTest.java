@@ -2,19 +2,20 @@ package org.galapagos.jelly.dao;
 
 import org.galapagos.jelly.vo.Region;
 import org.galapagos.jelly.vo.TravelVO;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 
 import java.util.List;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.Assert.*;
+
 
 class TravelDaoImplTest {
-    TravelDao dao = TravelDaoImpl.getInstance();
+    TravelDao dao = TravelDaoOracleImpl.getInstance();
 
     @Test
     void getInstance() {
-        TravelDao dao2 = TravelDaoImpl.getInstance();
+        TravelDao dao2 = TravelDaoOracleImpl.getInstance();
        assertSame(dao, dao2);
     }
 

@@ -9,10 +9,16 @@ public class JDBCUtil {
 
     static {
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            String url = "jdbc:oracle:thin:@localhost:1521:xe";
+//            Class.forName("oracle.jdbc.driver.OracleDriver");
+//            String url = "jdbc:oracle:thin:@localhost:1521:xe";
+//            String id = "glory";
+//            String password = "1234";
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/glory_db";
             String id = "glory";
             String password = "1234";
+
             conn = DriverManager.getConnection(url, id, password);
         } catch (Exception e) {
             e.printStackTrace();
