@@ -1,5 +1,6 @@
 package org.galapagos.jelly.dao;
 
+import org.galapagos.jelly.vo.PageRequest;
 import org.galapagos.jelly.vo.Region;
 import org.galapagos.jelly.vo.TravelVO;
 import org.junit.Test;
@@ -11,11 +12,11 @@ import static org.junit.Assert.*;
 
 
 class TravelDaoImplTest {
-    TravelDao dao = TravelDaoOracleImpl.getInstance();
+    TravelDao dao = TravelOracleDaoImpl.getInstance();
 
     @Test
     void getInstance() {
-        TravelDao dao2 = TravelDaoOracleImpl.getInstance();
+        TravelDao dao2 = TravelOracleDaoImpl.getInstance();
        assertSame(dao, dao2);
     }
 
@@ -23,16 +24,20 @@ class TravelDaoImplTest {
     void getTotalCount() {
         int totalCount = dao.getTotalCount();
 
-        assertTrue(totalCount == 120);
+        assertTrue(totalCount == 112);
     }
 
     @Test
     void getPage() {
-        List<TravelVO> list = dao.getPage(11, 20);
+        PageRequest pageRequest = new PageRequest(10, 10);
+
+        List<TravelVO> list = dao.getPage(pageRequest);
         assertTrue(list.size() == 10);
 
-        list = dao.getPage(111,120);
+        pageRequest.setStart(110);
+        list = dao.getPage(pageRequest);
         assertTrue(list.size() == 2);
+        assertEquals(2, list.size());
     }
 
     @Test
@@ -50,7 +55,7 @@ class TravelDaoImplTest {
     @Test
     void search() {
         List<TravelVO> list = dao.search("%해수욕장%");
-        assertEquals(8, list.size());
+        assertEquals(9, list.size());
     }
 
     @Test

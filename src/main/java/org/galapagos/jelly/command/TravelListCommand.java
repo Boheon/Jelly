@@ -2,7 +2,9 @@ package org.galapagos.jelly.command;
 
 
 import org.galapagos.jelly.dao.TravelDao;
-import org.galapagos.jelly.dao.TravelDaoOracleImpl;
+import org.galapagos.jelly.dao.TravelOracleDaoImpl;
+import org.galapagos.jelly.utils.TravelUtil;
+import org.galapagos.jelly.vo.PageRequest;
 import org.galapagos.jelly.vo.TravelVO;
 import org.galapogos.common.cli.Input;
 import org.galapogos.common.cli.common.Command;
@@ -12,7 +14,7 @@ import java.util.List;
 
 public class TravelListCommand implements Command {
     final static int COUNT_PER_PAGE= 10;
-    TravelDao dao = TravelDaoOracleImpl.getInstance();
+    TravelDao dao = TravelOracleDaoImpl.getInstance();
 
     @Override
     public void execute(){
@@ -34,16 +36,13 @@ public class TravelListCommand implements Command {
 
             //mysql
             int start = (page-1) * COUNT_PER_PAGE;
-            int end = start + COUNT_PER_PAGE;
 
-            List<TravelVO> list = dao.getPage(start, end);
-            System.out.println("#    [권역명] 관광지명");
-            System.out.println("====================================");
-            for (TravelVO travel : list) {
-                System.out.printf("%4d [%s] %s\n", travel.getNo(), travel.getRegion(), travel.getTitle());
-            }
-            System.out.println("====================================");
-            System.out.printf("총 %d 건 (페이지: %d/%d)\n", totalCount, page, totalPage);
+            PageRequest pageRequest = new PageRequest(start, COUNT_PER_PAGE);
+            List<TravelVO> list = dao.getPage(pageRequest);
+
+            TravelUtil.printTravelList(list);
+
+            System.out.printf("총 %d건 (페이지 : %d/%d)\n", totalCount, page, totalPage);
         }
 
     }

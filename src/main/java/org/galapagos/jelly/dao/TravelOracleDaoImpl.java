@@ -12,14 +12,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TravelDaoOracleImpl implements TravelDao {
+public class TravelOracleDaoImpl implements TravelDao {
 
     Connection conn = JDBCUtil.getConnection();
 
-    private TravelDaoOracleImpl() {
+    private TravelOracleDaoImpl() {
     }
 
-    private static TravelDaoOracleImpl dao = new TravelDaoOracleImpl();
+    private static TravelOracleDaoImpl dao = new TravelOracleDaoImpl();
 
     public static TravelDao getInstance() {
         return dao;

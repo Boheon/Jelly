@@ -1,14 +1,14 @@
 package org.galapagos.jelly.command;
 
 import org.galapagos.jelly.dao.TravelDao;
-import org.galapagos.jelly.dao.TravelDaoOracleImpl;
+import org.galapagos.jelly.dao.TravelOracleDaoImpl;
 import org.galapagos.jelly.vo.TravelVO;
 import org.galapogos.common.cli.Input;
 import org.galapogos.common.cli.common.Command;
 
 public class TravelDetailCommand implements Command {
 
-    TravelDao dao = TravelDaoOracleImpl.getInstance();
+    TravelDao dao = TravelOracleDaoImpl.getInstance();
 
     @Override
     public void execute() {
